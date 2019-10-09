@@ -1,0 +1,171 @@
+串口：
+	UART：
+	串行通信：
+	
+串口通信里的几个参数：
+	波特率：
+	数据位：
+	停止位：
+	奇偶校验位：
+	流控制位：
+
+串口开发流程：
+	串口初始化：ser_init()
+		>配置数据位、停止位
+		>配置波特率
+		>串口一系列使能
+
+	读写：
+		读数据：char ser_getc()
+		写数据：ser_putc(char c);
+
+串口控制led：
+	uartandled.rar
+串口控制蜂鸣器：
+	uartandbzz.rar
+
+rfid开发流程：
+	1.定义读写buf[16]
+		unsigned char rbuf[16];
+		unsigned char wbuf[16];
+	2.配置IO口时钟
+		LPC_SYSCON->SYSAHBCLKCTRL |= 1 << 16;
+	3.串口初始化
+		ser_init();
+	4.rfid初始化
+		rfid_init();
+	5.while()：循环处理读写业务
+		{
+			1.定义一个字符用来存储串口接到的数据
+			int c;
+			2.从串口读取字符
+			c = ser_getc();
+			3.判断读取到的字符是r还是w
+				如果是r：
+					读取rfid的卡片信息
+				如果是w：
+					读取剩余串口信息(16个字节)
+					将获取到的串口信息(想要设置的卡片信息)写入rfid卡中
+			switch(c)
+			{
+				case 'r':
+					rfid_read(rbuf);//用来读取rfid卡片的数据
+					//将读到的数据，即rbuf中的数据通过串口发送给串口助手
+					for(i = 0; i < 16; i++)
+					{
+						ser_putc(rbuf[i]);
+					}					
+					break;
+				case 'w':
+					//读取剩余16字节的数据，将其存入wbuf中，便于写入rfid卡
+					for(i = 0; i < 16; i++)
+					{
+						wbuf[i] = ser_getc();
+					}	
+					//往rfid卡中写入数据
+					rfid_write(wbuf);									
+					break;
+			}
+		}
+
+
+ser_init();
+	/*需要添加的头文件*/
+	#include "serial.h"
+	/*函数声明*/
+	void ser_init(void)；
+ser_getc();
+	/*需要添加的头文件*/
+	#include "serial.h"
+	/*
+	 *函数名：ser_getc
+	 *函数功能：从串口中读取一个字节
+	 *函数参数：void
+	 *函数返回值：int：返回串口中读到的数据
+	 */
+	int ser_getc(void)
+ser_putc();
+	/*需要添加的头文件*/
+	#include "serial.h"
+	/*
+	 *函数名：ser_putc
+	 *函数功能：往串口中写入一个字节
+	 *函数参数：char c:想要写入的字符
+	 *函数返回值：void
+	 */	
+	void ser_putc(char c)；
+
+rfid_init();
+	/*头文件*/
+	#include "rfid.h"
+	void rfid_init(void);
+
+rfid_read();
+	/*头文件*/
+	#include "rfid.h"
+	/*函数名：rfid_read
+	 *函数功能：是将rfid卡中的数据读取出来存入rbuf中
+	 *函数参数：
+	 *	unsigned char *rbuf：存储rfid卡信息的内存的首地址
+	 *函数返回值：成功返回0，失败返回-1	
+	 */
+	int rfid_read(unsigned char *rbuf);
+rfid_write();
+	/*头文件*/
+	#include "rfid.h"
+	/*函数名：rfid_write
+	 *函数功能：是将wbuf中的数据写入rfid卡中
+	 *函数参数：
+	 *	unsigned char *wbuf：存储想要写入rfid卡中的信息的首地址
+	 *函数返回值：成功返回0，失败返回-1	
+	 */
+	int rfid_write(unsigned char *wbuf)；
+
+Linux操作系统下的串口编程：
+	<1>初始化串口
+		/*需要添加的头文件*/
+		#include "serial.h"
+		/*
+		 *函数名：init_uart()
+		 *函数功能：串口初始化
+		 *函数参数：void
+		 *函数返回值：int：返回串口的文件描述符
+		 */
+		int init_uart();
+	<2>往串口中写入数据
+		/*需要添加的头文件*/
+		#include "serial.h"
+		/*
+		 *函数名：writecmd()
+		 *函数功能：发送一个命令给m0
+		 *函数参数：int fd: 初始化串口返回的文件描述符
+		 *	    const char *str：想要发送的指令
+		 *函数返回值：int：成功返回0
+		 */
+		int writecmd(int fd, const char *str);
+	<3>从串口中读取数据
+		/*需要添加的头文件*/
+		#include "serial.h"
+		/*
+		 *函数名：myrecvmsg()
+		 *函数功能：接收m0传过来的数据
+		 *函数参数：int fd: 初始化串口返回的文件描述符
+		 *	    const char *buf：接收m0数据的内存空间首地址
+		 *	    int data_len:想要接收的字符个数
+		 *函数返回值：int：成功返回0，失败返回-1
+		 */
+		int myrecvmsg(int fd, unsigned char *buf, int data_len);
+
+	1》初始化串口：
+		int fd = -1；
+		fd = init_uart();
+		char buf[20] = {0};
+	2.给m0发送指令
+		writecmd(fd, "read_rfid");
+	3.从串口中读取m0发送过来的数据
+		myrecvmsg(fd, buf, 17);
+
+
+
+
+	

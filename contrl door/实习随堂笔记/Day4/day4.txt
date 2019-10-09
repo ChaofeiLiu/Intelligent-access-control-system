@@ -1,0 +1,95 @@
+day4：函数
+
+什么叫做函数：
+	实现特定功能的代码段。
+为什么要有函数：
+	1.让代码简洁明了
+	2.便于维护
+	3.便于代码复用，提高开发效率
+函数：
+	函数声明：是告诉编译器有这么一个函数，用于语法检查。
+	函数声明的格式：
+		int mystrlen(const char *str);
+		<返回值的数据类型><函数名>(<形参列表>)；
+		形参列表中可以没有参数。
+		int mystrlen(const char *);
+		注意：函数声明必须写在主调函数之前。
+	函数定义：是函数的实现
+		int mystrlen(const char *str)
+		{
+			if(NULL == str)
+			{
+				return -1;
+			}
+			char *p = str;
+			int len = 0;
+			while(*p)
+			{
+				len++;
+				p++;
+			}
+			return len;
+		}
+
+	主调函数：调用函数的函数叫主调函数
+	被调函数：被调用的函数
+
+函数调用：
+	int len = 0;
+	char str[] = "hhhhhh";	
+	len = mystrlen(str);
+函数的调用格式：
+	<函数返回值类型的变量> = <函数名>(实参列表)；
+
+函数参数的传递：
+	1.值传递
+	2.址传递
+	3.全局变量
+
+	int add(int num1, int num2);
+
+全局变量：
+	变量是有作用域的：
+		局部变量的作用域为{并且定义之前不能用，定义之后才可以用}
+		如果局部变量不初始化，它的值是随机值
+	全局变量：
+		可以本文件中任意函数都可以使用
+		特殊情况下，其他文件也可以使用(extern)
+		全局变量默认初始化为0
+
+函数接口的封装：
+	*.h:头文件
+		#ifndef 	__XXX_H__
+		#define	__XXX_H__
+			函数声明
+		#endif
+
+		带#号的关键字叫做预编译指令，这样写的目的是防止头文件重复包含。
+		头文件的作用是给编译器提供语法检查的	
+		头文件和源文件名字一样，只是后缀不同，且头文件中，宏名要大写。	
+	*.c:源文件：
+		函数接口的实现(没有main函数)
+
+	main.c:写主函数的逻辑
+	
+	编译的时候：gcc *.c（所有的.c源文件一起编译）
+	注意：这些源文件都属于一个工程，这些源文件中有且仅有一个main函数。
+
+在添加自己封装的头文件时，使用#include "*.h"
+
+作业：
+	1.封装一套字符串操作的接口；
+		字符串拷贝：char * mystrcpy(char *dest, char *src);
+		字符串分割：char * mystrtok(char *src, char c);
+		求字符串的长度：int mystrlen(const char *str);
+		字符串拼接：char *mystrcat(const char *s1，char *s2);
+		实现atoi：int myatoi(const char *nptr);
+
+	hello 
+	world
+	helloworld
+
+	"12345"
+	12345
+
+		

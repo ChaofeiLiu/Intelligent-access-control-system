@@ -1,0 +1,38 @@
+设备领用格式：
+	领用人：
+	编号：
+	M0板子：1个
+	Zigbee模块：1个
+	ULINK2烧写线：
+	ULINK2仿真器：1个
+	RFID卡：1
+	串口线：
+
+NXP包：
+	Keil.LPC1100_DFP.1.4.0.zip
+
+M0板子的介绍：
+	1.LED
+	2.speaker
+	3.usb-uart
+	4.rfid(SPI)
+1.ULINK的连接
+2.ULINK烧写程序时，注意打开电源开关
+
+编译的问题：
+	1.工程是中文路径(一定要是英文路径)
+	2.工程文件名中不能出现中文
+
+M0开发板信息：
+	CPU：LPC11C14FBD48
+	           32bit
+	           Max speed: 50MHz
+	           Memory:32kB Flash 8KB SRAM
+	支持：GPIO\UART\SPI\I2C\CAN 2.0A/B\10bit A/D
+s
+如何点灯：
+	裸机开发的流程：
+		1.提出需求：点亮LED1
+		2.查看电路图，分析电路
+			寻找GPIO口
+		3.查看芯片手册，看如何使用GPIO口	

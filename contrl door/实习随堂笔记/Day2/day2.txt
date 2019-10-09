@@ -1,0 +1,349 @@
+day2：
+哈弗结构：
+	数据和指令分家
+冯诺依曼结构：
+	数据和指令不分家
+
+内存四区：
+	代码区：存放代码和字面量
+	堆区：是由程序员自己申请和释放的内存空间，以便于动态存储数据
+	栈区：存放auto修饰的变量
+	静态常量区：存放静态变量(static修饰的变量)，常量，还有全局变量
+
+./a.out 12 + 3 =
+12 + 3 = 15
+
+main函数传参：
+int main()
+{
+	return 0;
+}
+
+main()
+{
+	return 0;
+}
+
+main(void)
+{
+	return 0;
+}
+注意：main函数前面不写返回值，默认返回int类型
+void main(void)
+{
+
+}
+
+void main()
+{
+
+}
+/*main函数传参
+ *int argc:main函数参数的个数，包括命令本身
+ *char *argv[]:这是一个数组，数组的每一个成员都是一个char *
+ */
+int main(int argc, char *argv[])
+{
+	return 0;
+}
+
+返回上一级目录：cd ../
+
+./a.out 12 + 3 =
+
+char *是什么？
+char c = 3；
+char *p = &c;
+
+char arr[3] = {1,2,3};
+char *p = arr;
+p[2]
+
+char *：本质上是一个字符的指针类型
+里面存放的是一个char的地址
+
+在char *指向的是字符时，只能使用以下操作：
+	char *p = &c;
+	*p = 'o';
+	printf（“%c”，*p）；
+
+当char *是字符数组的首地址时：
+	如何遍历一个字符数组：
+char str[] = "hello";
+char *p = str;
+变量的定义：
+char c;
+int a = 10；
+short b;
+<数据类型><变量名> = <value>；
+<存储类型><数据类型修饰符><数据类型说明符><变量名> = <value>;
+static  	const 	int a = 5;
+(auto)	volatile 	int a = 5;
+extern	
+register
+
+存储类型：static(只能本文件使用)修饰静态变量
+	都存放在静态常量区	
+	auto：存放在栈区，如果变量前没有写
+	存储类型，就默认为auto
+	extern:修饰外部变量，被它修饰的变量定义在其他文件中
+	该变量一定是一个全局变量
+	register：建议编译器将该变量存储到寄存器当中，被该关键字
+	修饰的变量，不能进行取地址操作，&
+int a = 4;
+int *p = &a;
+
+数据类型修饰符：
+	const：修饰只读量
+	***volatile：告诉编译器直接从内存中取数据
+
+数组的遍历：
+#include <stdio.h>
+
+int main()
+{
+	/*定义一个字符数组arr，并且初始化*/
+	char arr[] = {1,2,3,55,44};
+	/*定义一个循环遍历i，并且初始化为0*/
+	int i = 0;
+	/*循环输出每一个元素*/
+	for(i = 0; i < sizeof(arr)/sizeof(arr[0]); i++)
+	{
+		/*输出每一个元素*/
+		printf("%d ", arr[i]);
+	}
+	/*输出空字符+换行*/
+	puts("");
+	return 0;
+}
+
+注意：写代码时，一定要注意括号成对去写
+
+数据类型：数据类型规定了，数据的存储空间大小和存储方式
+	简单数据类型：
+		整型：
+			有符号 (signed) char、short、int、long、long long
+			无符号 (unsigned)
+		实型：
+			float:单精度
+			double:双精度
+		void:
+		指针：
+			char *p;int *p
+		枚举：enum
+	构造数据类型：
+		数组：
+			char arr[5];
+			int arr[5];
+		结构体：
+			struct
+		共用体：
+			union
+
+char a = 1；
+
+printf（“sizeof(char):%d\n”,sizeof(char)）;
+sizeof:这是一个运算符，可以计算变量/数据类型所占的字节数
+内存分配的最小单元是字节
+1Byte = 8bit
+1KB = 1024Byte
+1MB = 1024KB
+1GB = 1024MB
+
+1：
+原码：0000 0001
+反码：0111 1110
+补码：0111 1111
+
+-1：
+原码：1000 0001
+反码：1111 1110
+补码：1111 1111
+char、short、int、long、long long
+int *、
+int arr[5];
+sizeof(arr);
+int arr1[2];
+sizeof(arr1);
+
+在vi复制粘贴：
+	命令行模式下，yy复制一行
+	p:粘贴到光标的下一行
+
+printf:格式化输出函数
+/*需要添加的头文件*/
+#include <stdio.h>
+/*函数声明*/
+/*
+ *函数名：printf
+ *函数功能：格式化输出
+ *函数参数：
+ *	const char *format:不可更改的输出格式字符串的首地址
+ *	...:不定个数的参数
+ *函数返回值：输出的字节数
+ */
+int printf(const  char  *format, ...);
+
+printf("hellowrold");
+printf("%d",arr[i]);
+printf("%d+%d=%d\n",num1, num2, num1+num2);
+
+%c:输出字符
+%d:输出整数
+%f:输出double
+%l:输出long
+%lu:输出unsigned long
+%s:输出字符串
+%p:输出指针
+
+./a.out 12 + 3 =
+12 + 3 = 15
+
+vi显示行号：
+	命令行模式下，输入:set nu
+取消行号：
+	命令行模式下，输入:set nonu
+	
+如何将字符串转换成整数：atoi
+#include <stdlib.h>
+/*
+ *函数名：atoi
+ *函数功能：将字符串转换为整数
+ *函数参数：
+ *	const char *nptr：被转换的字符串的首地址
+ *函数返回值：被转化后的整数
+ */
+int atoi(const char *nptr);
+
+函数调用的格式：
+返回值类型的变量 = 函数名(实参列表);
+
+函数声明：返回值类型 函数名（形参列表）
+int add(int num1, int num2);
+返回值类型：int
+函数名：add
+形参列表：int num1
+	int num2
+函数的定义：
+int add(int num1, int num2)
+{
+	return num1 + num2;
+}
+函数的调用：
+int ret = add(3,4);
+我们把函数调用时，传入的参数叫做实参。
+实参是：3，4
+
+argv[2] = "+"
+
+C语言中的三种基本结构：
+顺序结构：
+分支结构：
+	单分支：
+		if()
+		{
+			dlkkjdlks;
+		}
+	双分支
+		if()
+		{
+
+		}
+		else
+		{
+
+		}
+	多分支：
+		if()
+		{
+
+		}
+		else if()
+		{
+
+		}
+		...
+		else
+		{
+	
+		}
+
+		switch()
+		{
+			case '':
+				break;
+			....
+			default:
+				****;
+		}
+const 修饰的变量是一个只读量		
+循环结构：
+for(循环变量赋初值;循环满足的条件;循环变量的变化)
+{
+	循环体；
+}
+
+while(条件)
+{
+	循环体；
+	循环变量的变化；
+}
+
+do
+{
+
+}while(条件);
+
+break;
+contine;
+
+#define MIN(x,y)	x > y ? y : x
+
+char str[] = "hello world";
+strcpy:字符串拷贝
+/*需要添加的头文件*/
+#include <string.h>
+/*
+ *函数名：strcpy
+ *函数功能：字符串拷贝
+ *函数参数：
+ *	char *dest:拷贝到的内存空间的首地址
+ *	char *src:被拷贝的字符串的首地址
+ *函数返回值：
+ *	char *：返回目标字符串的首地址
+ */
+char *strcpy(char *dest, const char *src);
+
+求字符串的长度：
+strlen
+/*需要添加的头文件*/
+#include <string.h>
+/*
+ *函数名：strlen
+ *函数的功能：求字符串的长度
+ *函数参数：
+ *	const char *s:被求长度的字符串的首地址
+ *函数返回值：size_t:返回s的长度
+ */
+size_t strlen(const char *s);
+
+作业：
+  1.思考#define MIN(x,y)	x > y ? y : x有什么问题？
+    写一个求两个数中较大数的宏
+  2.自己写一个mystrcpy函数
+	/*
+	  *实现字符串拷贝
+	  *函数参数：
+	  *	char *dest：拷贝到的内存首地址
+	  *	char *src:被拷贝的字符串的首地址
+	  *	int size：dest的内存大小
+ 	  */
+ 	char *mystrcpy(char *dest, char *src, int size);
+  3.
+	定义一个char c，将c的第三个bit置1.
+	
+	char c = 0;
+	0000 0000
+	0000 0100
+	
+空指针：既不能*p;也不能给p指向的内存空间赋值。
